@@ -2,7 +2,6 @@ package com.jihedmathlouthi.veloback.Controller;
 
 
 import com.jihedmathlouthi.veloback.DTO.EmailRequest;
-import com.jihedmathlouthi.veloback.ServiceImp.EmailService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,18 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class EmailController {
 
-    @Autowired
-    private EmailService emailService;
+
     @Autowired
     private JavaMailSender emailSender;
-    @PreAuthorize("hasRole('ROLE_MEMBRE')")
-    @PostMapping("/sendEmail")
-    public void sendEmail(@RequestBody EmailRequest emailRequest) {
-        emailService.sendSimpleMessage(
-                emailRequest.getTo(),
-                emailRequest.getSubject(),
-                emailRequest.getText());
-    }
 
     @PostMapping("/sendHtmlEmail")
     public void sendHtmlEmail(@RequestBody EmailRequest emailRequest) throws MessagingException {
@@ -42,8 +32,5 @@ public class EmailController {
 
         emailSender.send(message);
     }
-/*@PostMapping("/send")
-public String sendMail(@RequestParam(value = "file", required = false) MultipartFile[] file, String to, String[] cc, String subject, String body) {
-    return emailService.sendMail(file, to, cc, subject, body);
-}*/
+
 }

@@ -27,8 +27,8 @@ public class OpenAPIConfig implements WebMvcConfigurer {
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
 
-        mailSender.setUsername("mchalbi606@gmail.com");
-        mailSender.setPassword("bxspxechxucbsutc");
+        mailSender.setUsername("oversizeofficialtn.1@gmail.com");
+        mailSender.setPassword("qayevyyhejewqoie");
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");

@@ -30,6 +30,7 @@ public class Defi {
     private String pointSorite;
 
     private String title;
+    private  int numero;
 
     private Integer nbrPlaceDisponible ;
     private float price;
@@ -40,13 +41,8 @@ public class Defi {
     @JsonIgnore
     @JoinColumn(name = "user_id")
     private User user;
-    @JsonIgnore
-    // Utilisateur qui annonce le covoiturage
-    @OneToMany(mappedBy = "defi")
-    private Set<Notification> notifications;
-    @ManyToMany( cascade = CascadeType.REMOVE)
-    @JsonIgnore
-    private List<User> chercheurs;
+
+
     @ManyToMany(cascade = CascadeType.REMOVE)
     private Set<User> utilisateursAcceptes = new HashSet<>();
     @ManyToMany(fetch = FetchType.EAGER ,cascade =  CascadeType.ALL)

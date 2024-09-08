@@ -11,6 +11,5 @@ public interface DefiRepository extends JpaRepository<Defi, Long> {
 
         @Query("SELECT c FROM Defi c  where c.status=false and c.DateSortie > CURRENT_DATE() ")
         List<Defi> getDefi();
-    List<Defi> findByUser(User user);
 
 }

@@ -40,13 +40,8 @@ public class User {
     @Column
     private String cin;
     @Column String phone;
-    @ManyToMany
-    private List<OrderDetail> orderDetails;
-    @OneToOne
-    private Cart cart;
-    @JsonIgnore
-    @OneToMany(mappedBy = "userDestiner")
-    Set<Notification> notifications;
+
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(  name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -54,11 +49,11 @@ public class User {
     private Set<Role> roles = new HashSet<>();
     // Liste des covoiturages annoncés par cet utilisateur
 
-    private Integer followerCount;
+  /*  private Integer followerCount;
     private Integer followingCount;
     private Boolean enabled;
     private Boolean accountVerified;
-    private Boolean emailVerified;
+    private Boolean emailVerified;*/
     int points;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date birthDate;
@@ -81,7 +76,7 @@ Defi defi;
             joinColumns = @JoinColumn(name = "followed_id"),
             inverseJoinColumns = @JoinColumn(name = "follower_id")
     )
-    private List<User> followerUsers = new ArrayList<>();
+  //  private List<User> followerUsers = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

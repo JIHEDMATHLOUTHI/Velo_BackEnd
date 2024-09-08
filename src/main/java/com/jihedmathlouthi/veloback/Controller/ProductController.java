@@ -4,8 +4,6 @@ package com.jihedmathlouthi.veloback.Controller;
 
 import com.jihedmathlouthi.veloback.Entity.ImageModel;
 import com.jihedmathlouthi.veloback.Entity.Product;
-import com.jihedmathlouthi.veloback.Enum.Category;
-import com.jihedmathlouthi.veloback.Repository.UserRepo;
 import com.jihedmathlouthi.veloback.ServiceImp.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -26,8 +24,8 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
-    private final UserRepo userDao;
-//@PreAutherize
+
+
     @PostMapping(value = {"/addd"},consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public Product addProduit(@RequestPart("product") Product product, @RequestPart("imageFile") MultipartFile[] file){
         try {
@@ -66,74 +64,17 @@ public class ProductController {
         Path filePath = uploadPath.resolve(fileName);
         Files.write(filePath, file.getBytes());
     }
-    /* Set<ImageModel> imageModels = new HashSet<>();
-        for (MultipartFile file : multipartFiles) {
-            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-            ImageModel imageModel = new ImageModel();
-            // Modifiez le chemin pour correspondre au serveur VMware
-            imageModel.setFilePath("http://192.168.192.104/product/" + fileName); // URL pour le serveur VMware
-            imageModel.setBytes(file.getBytes());
 
-            // Vous n'avez pas besoin de sauvegarder physiquement le fichier sur le serveur VMware car vous utilisez un système distant
-            // Enregistrement sur le système de fichiers local n'est pas nécessaire
-            saveImageToFileSystem(file, fileName);
-            imageModels.add(imageModel);
-        }
-        return imageModels;
-    }
-    public void saveImageToFileSystem(MultipartFile file, String fileName) throws IOException {
-        String uploadDir = "/var/www/html/product/";  // Chemin vers le dossier de destination
-
-        // Créer le dossier s'il n'existe pas déjà
-        Path uploadPath = Paths.get(uploadDir);
-        Files.createDirectories(uploadPath);
-
-        // Écrire le fichier sur le système de fichiers
-        Path filePath = uploadPath.resolve(fileName);
-        Files.write(filePath, file.getBytes());
-    }*/
 
     @GetMapping("/{pid}")
     public Product getProductById(@PathVariable int pid ){
         return productService.getProductById(pid);
     }
     @GetMapping("/getall")
-    public List<Product> getAllProduct(@RequestParam(defaultValue = "0") int pageNumber){
-        return productService.getAllProduct(pageNumber);
-    }
-  /*  @GetMapping("search/{name}/{brand}/{price}")
-    public List<Product> searchProducts(@PathVariable("name") String name,@PathVariable("brand") String brand,@PathVariable("price") float price) {
-        return productService.searchProducts(name,brand,price);
-    }*/
-    @DeleteMapping("/delete/{id}")
-  public void deleteproduit(@PathVariable("id") int id) {
-        productService.deleteProduct(id);
+    public List<Product> getAllProduct(){
+        return productService.getAllProduct();
     }
 
-
-    //@PreAuthorize("hasRole('User')")
-    @GetMapping({"/getProductDetails/{isSingeProductCheckout}/{productId}"})
-    public List<Product> getProductDetails(@PathVariable(name="isSingeProductCheckout") boolean isSingeProductCheckout,
-                                           @PathVariable(name= "productId") Integer productId) {
-
-        return productService.getProductDetails(isSingeProductCheckout, productId);
-
-
-    }
-    @GetMapping({"/getProductDetails2/{isSingeProductCheckout}/{productId}"})
-    public List<Product> getProductDetails2(@PathVariable(name="isSingeProductCheckout") boolean isSingeProductCheckout,
-                                           @PathVariable(name= "productId") Integer productId) {
-
-        return productService.getProductDetails2(isSingeProductCheckout, productId);
-
-
-    }
-    @GetMapping("/products")
-    public List<Product> getProductsByCategory(@RequestParam("category") String category) {
-        Category categoryEnum = Category.valueOf(category.toUpperCase());
-
-        return productService.getProductsByCategory(categoryEnum);
-    }
 
 
 }
